@@ -11,6 +11,7 @@ import {
   Link,
   Outlet,
   useParams,
+  NavLink,
 } from 'react-router-dom';
 
 const Home = () => {
@@ -38,10 +39,30 @@ const Learn = () => {
 };
 
 const Courses = () => {
+  const coursesList = ['React', 'Angular', 'Vue', 'NodeJs'];
+  const randomCourseName =
+    coursesList[Math.floor(Math.random() * coursesList.length)];
+  console.log(randomCourseName);
+
   return (
     <div>
       <p className="p-3">Courses List</p>
       <p className="px-3">Courses Card</p>
+      <p className="px-3 fw-bold">More Links:</p>
+      <NavLink
+        style={({ isActive }) => {
+          return {
+            backgroundColor: isActive ? 'green' : 'black',
+          };
+        }}
+        className="px-4 text-white ms-2 p-2"
+        to={`/learn/courses/${randomCourseName}`}
+      >
+        {randomCourseName}
+      </NavLink>
+      <NavLink className="px-4 text-white" to={`/learn/courses/users`}>
+        Users
+      </NavLink>
       <Outlet />
     </div>
   );
@@ -60,7 +81,7 @@ const CourseID = () => {
   const { courseID } = useParams();
   return (
     <div>
-      <p className="p-3">Course ID: {courseID} </p>
+      <p className="p-3 display-4">URL param is: {courseID} </p>
     </div>
   );
 };
