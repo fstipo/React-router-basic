@@ -12,6 +12,8 @@ import {
   Outlet,
   useParams,
   NavLink,
+  useNavigate,
+  useLocation,
 } from 'react-router-dom';
 
 const Home = () => {
@@ -79,9 +81,31 @@ const Bundles = () => {
 
 const CourseID = () => {
   const { courseID } = useParams();
+  const navigate = useNavigate();
   return (
     <div>
       <p className="p-3 display-4">URL param is: {courseID} </p>
+      <button
+        onClick={() => navigate('/dashboard', { state: 500 })}
+        className="px-5 mx-3 btn btn-warning"
+      >
+        Price
+      </button>
+      <Link to="/dashboard" state={courseID}>
+        Send Info
+      </Link>
+    </div>
+  );
+};
+
+const Dashboard = () => {
+  const { state } = useLocation();
+  return (
+    <div>
+      <h2 className="text-center display-4">
+        I will send you a price my friend
+      </h2>
+      <p className="fw-bold text-warning text-center display-5">{state}</p>
     </div>
   );
 };
@@ -99,6 +123,7 @@ root.render(
           </Route>
           <Route path="bundles" element={<Bundles />} />
         </Route>
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
